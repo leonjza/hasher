@@ -7,3 +7,6 @@ Makes use of sha3.js from the CrytoJS repo @https://code.google.com/p/crypto-js/
 
 ## Install
 Simply clone the repository to a directory that a web server can serve, or clone to your computer and open `index.html` in your browser.
+
+## Running Example
+See it in action at http://theninjabag.net/hasher/
