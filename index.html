@@ -71,6 +71,14 @@
     <script src="assets/sha3.js"></script>
     <script>
 
+      // Simulate a click on #hashit when enter is pressed in a field
+      $('#password,#identifier').keypress(function(e){
+          if(e.which == 13){//Enter key pressed
+              $('#hashit').click();
+          }
+      });
+
+      // Hash the fields and generate a password
       $('button#hashit').click(function() {
 
         // Get the values
