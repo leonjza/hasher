@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="password hash creator">
+    <meta name="author" content="Leon Jacobs">
+
+    <title>Hasher™</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="assets/jumbotron-narrow.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="header">
+        <h3 class="text-muted">Hasher™</h3>
+      </div>
+
+      <p>
+        Hasher™ is a completely client side password generator.<br>
+        A master password and identifier is concatenated and then has a SHA3 hashing function applied to it to generate the output.
+        Nothing is sent to any server, and you can download and run a local copy of this too.
+      </p>
+
+      <div class="jumbotron">
+        <p class="lead">Enter your master password and site name.</p>
+        <p>
+          <input type="password" id="password" class="form-control" placeholder="Master Password">
+          <input type="text" id="identifier" class="form-control" placeholder="Site Name">
+        </p>
+        <p><button class="btn btn-lg btn-default" role="button" id="hashit">Generate Password</button></p>
+
+        <p><b><span id="contents"></span></b></p>
+      </div>
+
+      <div class="footer">
+        <p>&copy; Copyleft Whenever
+          <span class="pull-right">
+            <a href="https://twitter.com/leonjza">@leonjza</a> |
+            <a href="https://github.com/th3l33k/hasher">Github</a> |
+            <a href="assets/hasher.zip">Download</a>
+          </span>
+        </p>
+      </div>
+
+    </div> <!-- /container -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="assets/jquery-1.10.2.min.js"></script>
+
+    <!-- from CryptoJS: https://code.google.com/p/crypto-js/ -->
+    <script src="assets/sha3.js"></script>
+    <script>
+
+      $('button#hashit').click(function() {
+
+        // Get the values
+        var master_key = $('input#password').val().trim();
+        var identifier = $('input#identifier').val().trim();
+
+        // Check that we got values to work with
+        if(master_key.length == 0 || identifier.length == 0 ) {
+
+          $('span#contents').html('Please enter both a master password and site name.');          
+        } else {
+
+          // Hash the values
+          var result = CryptoJS.SHA3(master_key + identifier, { outputLength: 128 });
+
+          // Display the results ^^
+          $('span#contents').html(result.toString(CryptoJS.enc.Hex));          
+        }
+      });
+    </script>
+  </body>
+</html>
