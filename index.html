@@ -42,20 +42,26 @@
       <div class="jumbotron">
         <p class="lead">Enter your master password and site name.</p>
         <p>
-          <input type="password" id="password" class="form-control" placeholder="Master Password">
+          <input type="password" id="password" class="form-control" placeholder="Master Password" autofocus>
           <input type="text" id="identifier" class="form-control" placeholder="Site Name">
         </p>
         <p><button class="btn btn-lg btn-default" role="button" id="hashit">Generate Password</button></p>
 
-        <p><b><span id="contents"></span></b></p>
+        <hr>
+
+        <p>
+          <p class="text-left text-success"> <span id="contents32"></span> </p>
+          <p class="text-left"> <span id="contents24"></span> </p>
+          <p class="text-left text-warning"> <span id="contents16"></span> </p>
+          <p class="text-left text-danger"> <span id="contents8"></span> </p>
+        </p>
       </div>
 
       <div class="footer">
         <p>&copy; Copyleft Whenever
           <span class="pull-right">
             <a href="https://twitter.com/leonjza">@leonjza</a> |
-            <a href="https://github.com/th3l33k/hasher">Github</a> |
-            <a href="assets/hasher.zip">Download</a>
+            <a href="https://github.com/th3l33k/hasher">Github</a>
           </span>
         </p>
       </div>
@@ -72,10 +78,8 @@
     <script>
 
       // Simulate a click on #hashit when enter is pressed in a field
-      $('#password,#identifier').keypress(function(e){
-          if(e.which == 13){//Enter key pressed
-              $('#hashit').click();
-          }
+      $('#password,#identifier').keyup(function(e){
+        $('#hashit').click();
       });
 
       // Hash the fields and generate a password
@@ -95,7 +99,10 @@
           var result = CryptoJS.SHA3(master_key + identifier, { outputLength: 128 });
 
           // Display the results ^^
-          $('span#contents').html(result.toString(CryptoJS.enc.Hex));          
+          $('span#contents32').html("32 : <b>" + result.toString(CryptoJS.enc.Hex) + "</b>");          
+          $('span#contents24').html("24 : <b>" + result.toString(CryptoJS.enc.Hex).slice(0, -8) + "</b>");
+          $('span#contents16').html("16 : <b>" + result.toString(CryptoJS.enc.Hex).slice(0, -16) + "</b>");
+          $('span#contents8').html("&nbsp;&nbsp;8 : <b>" + result.toString(CryptoJS.enc.Hex).slice(0, -24) + "</b>");
         }
       });
     </script>
